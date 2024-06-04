@@ -40,6 +40,7 @@
                     <th class="th_deg">Wifi</th>
                     <th class="th_deg">Room Type</th>
                     <th class="th_deg">Image</th>
+                    <th class="th_deg">Delete</th>
                 </tr>
                 @foreach ($datas as $data )
                 
@@ -51,6 +52,9 @@
                     <td>{{$data->room_type}}</td>
                     <td>
                         <img witdh="100" src="room/{{$data->image}}" alt="">
+                    </td>
+                    <td>
+                      <a href="{{url('room_delete',$data->id)}}" class="btn btn-danger" onclick="return config('Are you sure to delete this');">Delete</a>
                     </td>
                 </tr>
 

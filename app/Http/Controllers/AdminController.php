@@ -38,6 +38,7 @@ class AdminController extends Controller
             return view('admin.create_room');
         }
 
+        //inserting the Data to DB
         public function add_room(Request $request){
             
             $data = new Room;
@@ -68,9 +69,17 @@ class AdminController extends Controller
 
         }
     
+        //Displaying the room
     public function view_room(){
         $datas = Room::all();   //here 'Room' is modal name and all data from table is store in $data variable
 
         return view('admin.view_room',compact('datas'));  //all the data from $data is send to blade file
+    }
+
+    //Deleting the room
+    public function room_delete($id){
+        $data = Room::find($id);
+        $data->delete();
+        return redirect()->back();
     }
 }
