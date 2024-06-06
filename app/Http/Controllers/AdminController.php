@@ -17,7 +17,9 @@ class AdminController extends Controller
 
                 if($usertype == 'user')
                 {
-                    return view('home.index');
+                    $room = Room::all();
+
+                    return view('home.index',compact('room'));
                 }
                 else if($usertype == 'admin')
                 {
@@ -31,7 +33,10 @@ class AdminController extends Controller
         }
 
         public function home(){
-            return view('home.index');
+
+            $room = Room::all();
+
+            return view('home.index',compact('room'));
         }
 
         public function create_room(){
@@ -81,5 +86,48 @@ class AdminController extends Controller
         $data = Room::find($id);
         $data->delete();
         return redirect()->back();
+    }
+
+
+    public function room_update($id){
+
+        $data = Room::find($id);
+        return view('admin.update_room',compact('data'));
+    }
+
+    public function edit_room(Request $request,$id){
+        
+        $data = Room::find($id);
+
+        $data->room_title = $request->title;
+
+        $data->description = $request->description;
+
+        $data->price = $request->price;
+
+        $data->wifi = $request->wifi;
+
+        $data->room_type = $request->type;
+
+        $image = $request->image;  //get image from form
+
+            if($image){
+
+                $imagename = time().'.'.$image->getClientOriginalExtension();  //modify the image name using time function
+
+                $request->image->move('room',$imagename);  //moving the image in public folder with certain name
+
+                $data->image = $imagename;   //storing the data in DB
+            }
+
+
+        $data->save();
+
+        return redirect()->back();
+
+
+
+        
+
     }
 }

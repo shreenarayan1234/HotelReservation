@@ -41,6 +41,8 @@
                     <th class="th_deg">Room Type</th>
                     <th class="th_deg">Image</th>
                     <th class="th_deg">Delete</th>
+                    <th class="th_deg">Update</th>
+
                 </tr>
                 @foreach ($datas as $data )
                 
@@ -54,7 +56,10 @@
                         <img witdh="100" src="room/{{$data->image}}" alt="">
                     </td>
                     <td>
-                      <a href="{{url('room_delete',$data->id)}}" class="btn btn-danger" onclick="return config('Are you sure to delete this');">Delete</a>
+                      <a href="{{url('room_delete',$data->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure to delete this');">Delete</a>
+                    </td>
+                    <td>
+                      <a href="{{url('room_update',$data->id)}}" class="btn btn-warning">Update</a>
                     </td>
                 </tr>
 
