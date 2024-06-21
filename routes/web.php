@@ -16,7 +16,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-route::get('/',[AdminController::class,'home'])->middleware(['auth','admin']);
+route::get('/',[AdminController::class,'home']);
 
 
 route::get('/home',[AdminController::class,'index'])->name('home')->middleware(['auth','admin']);
@@ -35,7 +35,7 @@ route::post('/edit_room/{id}',[AdminController::class,'edit_room'])->middleware(
 
 route::get('/room_details/{id}',[HomeController::class,'room_details']);
 
-route::post('/add_booking/{id}',[HomeController::class,'add_booking'])->middleware(['auth','admin']);
+route::post('/add_booking/{id}',[HomeController::class,'add_booking']);
 
 route::get('/bookings',[AdminController::class,'bookings'])->middleware(['auth','admin']);
 
@@ -44,6 +44,8 @@ route::get('/delete_booking/{id}',[AdminController::class,'delete_booking'])->mi
 route::get('/approve_book/{id}',[AdminController::class,'approve_book'])->middleware(['auth','admin']);
 
 route::get('/reject_book/{id}',[AdminController::class,'reject_book'])->middleware(['auth','admin']);
+
+route::get('/cancel_book/{id}',[HomeController::class,'cancel_book']);
 
 route::get('/view_gallary',[AdminController::class,'view_gallary'])->middleware(['auth','admin']);
 
@@ -64,6 +66,8 @@ route::get('/our_rooms',[HomeController::class,'our_rooms']);
 route::get('/hotel_gallary',[HomeController::class,'hotel_gallary']);
 
 route::get('/contact_us',[HomeController::class,'contact_us']);
+
+route::get('/mybooking',[HomeController::class,'mybooking']);
 
 
 

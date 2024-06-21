@@ -20,7 +20,7 @@
       </header>
       <!-- end header inner -->
       <!-- our_room -->
-            @include('home.gallary')
+            @include('home.galary')
       <!-- end our_room -->
       <!--  footer -->
             @include('home.footer')

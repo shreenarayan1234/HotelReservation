@@ -25,8 +25,17 @@
                                  <a class="nav-link" href="{{url('our_rooms')}}">Our room</a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link" href="{{'hotel_gallary'}}">Gallery</a>
+                                 <a class="nav-link" href="{{url('hotel_gallary')}}">Gallery</a>
                               </li>
+
+                              @if (Route::has('login'))
+                                 @auth
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{{url('mybooking')}}">My Booking</a>
+                              </li>
+                                 @endauth
+                              @endif
+
                               <li class="nav-item">
                                  <a class="nav-link" href="{{url('contact_us')}}">Contact Us</a>
                               </li>

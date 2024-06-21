@@ -65,6 +65,9 @@
         @if ($data->status == 'rejected')
             <span style="color:red;">Rejected</span>
         @endif
+        @if ($data->status == 'Canceled')
+            <span style="color:red;">Cancelled</span>
+        @endif
         @if ($data->status == 'waiting')
             <span style="color:yellow;">Waiting</span>
         @endif
