@@ -51,7 +51,9 @@
                         <p style="padding: 12px">{{$room->description}}</p>
                         <h4 style="padding: 12px">Free Wifi : {{$room->wifi}}</h4>
                         <h4 style="padding: 12px">Room Type : {{$room->room_type}}</h4>
-                        <h3 style="padding: 12px">Price : {{$room->price}}</h3>
+                        <!-- <h3 style="padding: 12px">Price : {{$room->price}}</h3> -->
+                        <h3 style="padding: 12px">Price per night: <span id="pricePerNight">{{$room->price}}</span></h3>
+                        <h3 style="padding: 12px">Total Price: <span id="totalPrice">0</span></h3>
 
 
                      </div>
@@ -85,7 +87,7 @@
                 @endforeach
 
                 @endif
-                <form action="{{url('add_booking',$room->id)}}" method="post">
+                <!-- <form action="{{url('add_booking',$room->id)}}" method="post">
                 @csrf
                 <div>
                     <label>Name</label>
@@ -122,7 +124,56 @@
                 <div>
                     <input type="submit" style="background-color:skyblue;" class="btn btn-primary" value="Book Room">
                 </div>
-                </form>
+                </form> -->
+                <form action="{{ url('add_booking', $room->id) }}" method="post">
+    @csrf
+    <div>
+        <label>Name</label>
+        <input type="text" name="name" 
+        @if(Auth::id())
+        value="{{ Auth::user()->name }}"
+        @endif
+        >
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" name="email"
+        @if(Auth::id())
+        value="{{ Auth::user()->email }}"
+        @endif
+        >
+    </div>
+    <div>
+        <label>Phone</label>
+        <input type="number" name="phone"
+        @if(Auth::id())
+        value="{{ Auth::user()->phone }}"
+        @endif
+        >
+    </div>
+    <div>
+        <label>Start Date</label>
+        <input type="date" name="startDate" id="startDate">
+    </div>
+    <div>
+        <label>End Date</label>
+        <input type="date" name="endDate" id="endDate">
+    </div>
+    <br>
+    <div>
+        @if(Auth::id())
+        <input type="submit" style="background-color: skyblue;" class="btn btn-primary" value="Book Room">
+        @else
+        <input type="button" style="background-color: skyblue; cursor: not-allowed;" class="btn btn-primary" value="Book Room" id="bookRoomButton">
+        <script>
+            document.getElementById('bookRoomButton').addEventListener('click', function() {
+                confirm('Please log in to book a room.');
+            });
+        </script>
+        @endif
+    </div>
+</form>
+
             </div>
 
             </div>
@@ -137,21 +188,40 @@
             <script>
                 $(function(){
                     var dtToday = new Date();
-                    var month = dtToday.getMonth() + 1;
+                    var month = dtToday.getMonth() + 1;  //dtToday.getMonth() + 1 gets the current month (0-11) and adds 1 to make it 1-12.
                     var day = dtToday.getDate();
                     var year = dtToday.getFullYear();
-
+                    //If the month or day is less than 10, add a leading zero to ensure a two-digit format (e.g., 1 becomes 01)
                     if(month < 10)
                         month = '0' + month.toString();
 
                     if(day < 10)
                     day = '0' + day.toString();
-                    var maxDate = year + '-' + month + '-' + day;
+                    var maxDate = year + '-' + month + '-' + day; //Concatenate the year, month, and day to create a string in the format YYYY-MM-DD.
                     $('#startDate').attr('min',maxDate);
                     $('#endDate').attr('min',maxDate);
-                });
-            </script>
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+                function calculateTotalPrice() {
+                    var startDate = new Date($('#startDate').val());//Get the values of the #startDate and #endDate inputs and convert them to Date objects.
+                    var endDate = new Date($('#endDate').val());
+                    if(startDate && endDate && endDate > startDate) {
+                        var timeDifference = endDate.getTime() - startDate.getTime();//Calculate the difference in time between the end date and start date in milliseconds.
+
+                        var nights = timeDifference / (1000 * 3600 * 24);//Convert the time difference from milliseconds to days by dividing by the number of milliseconds in a day.
+
+                        var pricePerNight = parseFloat($('#pricePerNight').text());//Get the price per night from the #pricePerNight element and convert it to a float.
+                        var totalPrice = nights * pricePerNight;
+                        $('#totalPrice').text(totalPrice.toFixed(2));
+                    } else {
+                        $('#totalPrice').text('0');
+                    }
+                }
+
+                $('#startDate, #endDate').on('change', calculateTotalPrice);
+
+        });
+    </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
    </body>
 </html>

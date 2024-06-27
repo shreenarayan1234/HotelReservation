@@ -27,32 +27,44 @@
             <span class="sr-only">Next</span>
             </a>
          </div>
-         <div class="booking_ocline">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-5">
-                     <div class="book_room">
-                        <h1>Book a Room Online</h1>
-                        <form class="book_now">
-                           <div class="row">
-                              <div class="col-md-12">
-                                 <span>Arrival</span>
-                                 <img class="date_cua" src="images/date.png">
-                                 <input class="online_book" placeholder="dd/mm/yyyy" type="date" name="dd/mm/yyyy">
-                              </div>
-                              <div class="col-md-12">
-                                 <span>Departure</span>
-                                 <img class="date_cua" src="images/date.png">
-                                 <input class="online_book" placeholder="dd/mm/yyyy" type="date" name="dd/mm/yyyy">
-                              </div>
-                              <div class="col-md-12">
-                                 <button class="book_btn">Book Now</button>
-                              </div>
-                           </div>
-                        </form>
-                     </div>
-                  </div>
-               </div>
+
+
+   <div class="booking_ocline">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="book_room">
+                    <h1>Search for Rooms</h1>
+                    <form class="book_now" action="{{ route('search.rooms') }}" method="GET">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span>Price Range</span>
+                                <select class="online_book" name="price_range" style="background-color: #000000c7;">
+                                    <option value="">Select Price Range</option>
+                                    <option value="0-1000">0 - 1000</option>
+                                    <option value="1000-5000">1000 - 5000</option>
+                                    <option value="5000-10000">5000 - 10000</option>
+                                    <option value="10000-20000">10000 - 20000</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <span>Room Type</span>
+                                <select class="online_book" name="room_type" style="background-color: #000000c7;">
+                                    <option value="">Select Room Type</option>
+                                    <option value="single">Single</option>
+                                    <option value="double">Double</option>
+                                    <option value="suite">Premium</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="book_btn" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-         </div>
+        </div>
+    </div>
+</div>
+
       </section>

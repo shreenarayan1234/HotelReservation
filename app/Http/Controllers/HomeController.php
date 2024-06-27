@@ -93,7 +93,7 @@ class HomeController extends Controller
         return view('home.contact_us');
     }
 
-    
+
     public function mybooking()
     {
         //The user() method of the Auth facade returns the currently authenticated user. It returns an instance of the User model (or whichever model you have configured for authentication).
@@ -114,5 +114,33 @@ class HomeController extends Controller
         $booking->save();
 
         return redirect()->back();
+    }
+
+
+    //Search
+    public function search(Request $request)
+    {
+        // Get the input values from the form
+        $priceRange = $request->input('price_range');
+        $roomType = $request->input('room_type');
+
+        // Start building the query on the Room model
+        $rooms = Room::query();
+
+        // Apply filters based on input values
+        if ($priceRange) {
+            [$minPrice, $maxPrice] = explode('-', $priceRange);
+            $rooms->whereBetween('price', [(int) $minPrice, (int) $maxPrice]);
+        }
+
+        if ($roomType) {
+            $rooms->where('room_type', $roomType);
+        }
+
+        // Execute the query and get the filtered rooms
+        $rooms = $rooms->get();
+
+        // Return the view with the filtered rooms
+        return view('home.search_result', compact('rooms'));
     }
 }

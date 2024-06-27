@@ -57,6 +57,8 @@
                                 <option selected value="regular">Regular</option>
                                 <option value="premium">Premium</option>
                                 <option value="deluxe">Deluxe</option>
+                                <option value="single">Single</option>
+                                <option value="double">Double</option>
                           </select>
                         </div>
 
