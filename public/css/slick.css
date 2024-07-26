@@ -106,3 +106,55 @@
     display: none;
 }
 
+/* CSS for Rating */
+.rating {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    color: #ddd; /* Color for empty stars */
+    font-size: 8px;
+    margin-left: -15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label:hover,
+.rating label:hover ~ label,
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+    color: #ffc107; /* Color for filled stars */
+    font-size: 8px;
+}
+
+.star-rating {
+    align-items: center;
+    font-size: 1.5em;
+    display: flex;
+    margin-left: -5px;
+    position: relative; /* Ensure positioning context for .front-stars */
+}
+
+.back-stars {
+    color: #CCC; /* Color for empty stars */
+    display: flex; /* Ensure stars are laid out in a row */
+    position: relative; /* Position relative to contain .front-stars */
+}
+
+.front-stars {
+    color: #FFBC0B; /* Color for filled stars */
+    display: flex; /* Ensure stars are laid out in a row */
+    overflow: hidden; /* Hide overflow of stars based on width */
+    position: absolute; /* Absolute positioning to overlay .back-stars */
+    top: 0; /* Align to the top of .back-stars */
+    left: 0; /* Align to the left of .back-stars */
+    transition: width 0.5s; /* Smooth transition for rating changes */
+}
+
+.percent {
+    color: #bb5252;
+    font-size: 1.5em;
+}

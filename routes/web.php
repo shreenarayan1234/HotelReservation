@@ -46,4 +46,4 @@ Route::get('/contact_us', [HomeController::class, 'contact_us']);
 Route::get('/mybooking', [HomeController::class, 'mybooking']);
 
 Route::get('/search-rooms', [HomeController::class, 'search'])->name('search.rooms');
-
+Route::post('/save-rating/{roomId}',[HomeController::class,'saveRating'])->name('front.saveRating');

@@ -15,4 +15,7 @@ class Room extends Model
         'wifi',
         'room_type'
     ];
+    public function room_ratings(){
+        return $this->hasMany(RoomRating::class)->where('status',1);
+    }
 }

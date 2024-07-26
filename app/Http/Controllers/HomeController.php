@@ -9,20 +9,35 @@ use App\Models\Room;
 use App\Models\Booking;
 
 use App\Models\Contact;
+// use App\Models\ProductRating;
+use App\Models\RoomRating;
+
 
 use App\Models\Gallary;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 class HomeController extends Controller
 {
-    public function room_details($id)
-    {
+    // public function room_details($id)
+    // {
 
-        $room = Room::find($id);
-        return view('home.room_details', compact('room'));
-    }
+    //     $room = Room::find($id);
+    //     return view('home.room_details', compact('room'));
+    // }
+
+    public function room_details($id)
+{
+    $room = Room::withCount('room_ratings')
+                ->withSum('room_ratings', 'rating')
+                ->with(['room_ratings'])
+                ->findOrFail($id);
+
+    return view('home.room_details', compact('room'));
+}
+
 
     public function add_booking(Request $request, $id)
     {
@@ -143,4 +158,47 @@ class HomeController extends Controller
         // Return the view with the filtered rooms
         return view('home.search_result', compact('rooms'));
     }
+
+    public function saveRating($id, Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'email' => 'required|email',
+            'comment' => 'required',
+            'rating' => 'required|integer|min:1|max:5'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    
+        $count = RoomRating::where('room_id', $id)->where('email', $request->email)->count();
+        if ($count > 0) {
+            return response()->json([
+                'status' => 'duplicate',
+                'message' => 'You already rated this Room'
+            ]);
+        }
+    
+        $roomRating = new RoomRating;
+        $roomRating->room_id = $id;
+        $roomRating->username = $request->name;
+        $roomRating->email = $request->email;
+        $roomRating->comment = $request->comment;
+        $roomRating->rating = $request->rating;
+        $roomRating->status = 1;
+        $roomRating->save();
+    
+        session()->flash('success', 'Thanks for your rating.');
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Thanks for your rating.'
+        ]);
+    }
+    
+    
+    
 }
