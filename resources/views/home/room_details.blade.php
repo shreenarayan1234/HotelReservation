@@ -59,17 +59,41 @@
 
                <div class="col-md-8">
                   <div id="serv_hover"  class="room">
-                     <div style="padding:20px;" class="room_img">
+                     <div style="padding:10px;" class="room_img">
                         <img style="height: 300px; width: 800px" src="/room/{{$room->image}}" alt="#"/>
                      </div>
                      <div class="bed_room">
                         <h4>{{$room->room_title}}</h4>
+
+                        <!-- //Rating a Room -->
+                                        <div class="star-rating room mt-2" title="">
+                                            <div class="back-stars">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                
+                                                <div class="front-stars" style="width: {{$avgRatingPer}}%">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        <small class="pt-1">({{($room->room_ratings_count > 1)?
+                                        $room->room_ratings_count.' Reviews':
+                                        $room->room_ratings_count.' Review'}})</small>
+                                        </div>  
+                                        
+
                         <!-- <p style="padding: 12px">{{$room->description}}</p> -->
-                        <h6 style="padding: 12px">Free Wifi : {{$room->wifi}}</h6>
-                        <h6 style="padding: 12px">Room Type : {{$room->room_type}}</h6>
+                        <h6 style="padding: 2px">Free Wifi : {{$room->wifi}}</h6>
+                        <h6 style="padding: 2px">Room Type : {{$room->room_type}}</h6>
                         <!-- <h3 style="padding: 12px">Price : {{$room->price}}</h3> -->
-                        <h6 style="padding: 12px">Price per night: <span id="pricePerNight">{{$room->price}}</span></h6>
-                        <h6 style="padding: 12px">Total Price: <span id="totalPrice">0</span></h6>
+                        <h6 style="padding: 2px">Price per night: <span id="pricePerNight">{{$room->price}}</span></h6>
+                        <h6 style="padding: 2px">Total Price: <span id="totalPrice">0</span></h6>
                      </div>
                   </div>
                </div>
@@ -211,8 +235,8 @@
                             <div class="col-md-12 mt-5">
                                 <div class="overall-rating mb-3">
                                     <div class="d-flex">
-                                        <h1 class="h3 pe-3 mt-3">4.0</h1>
-                                        <div class="star-rating mt-2" title="70%">
+                                        <h1 class="h3 pe-3 mt-3">{{$avgRating}}</h1>
+                                        <div class="star-rating mt-2" title="">
                                             <div class="back-stars">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -220,7 +244,7 @@
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 
-                                                <div class="front-stars" style="width: 70%">
+                                                <div class="front-stars" style="width: {{$avgRatingPer}}%">
                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -229,7 +253,9 @@
                                                 </div>
                                             </div>
                                         </div>  
-                                        <div class="pt-2 ps-2 mt-3">(03 Reviews)</div>
+                                        <div class="pt-2 ps-2 mt-3">({{($room->room_ratings_count > 1)?
+                                        $room->room_ratings_count.' Reviews':
+                                        $room->room_ratings_count.' Review'}})</div>
                                     </div>
                                     
                                 </div>

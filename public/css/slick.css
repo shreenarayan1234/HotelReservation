@@ -158,3 +158,9 @@
     color: #bb5252;
     font-size: 1.5em;
 }
+
+.star-rating.room{
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+}

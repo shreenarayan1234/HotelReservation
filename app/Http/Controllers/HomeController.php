@@ -28,15 +28,25 @@ class HomeController extends Controller
     //     return view('home.room_details', compact('room'));
     // }
 
-    public function room_details($id)
-{
-    $room = Room::withCount('room_ratings')
-                ->withSum('room_ratings', 'rating')
-                ->with(['room_ratings'])
-                ->findOrFail($id);
+        public function room_details($id)
+    {
+        $room = Room::withCount('room_ratings')
+                    ->withSum('room_ratings', 'rating')
+                    ->with(['room_ratings'])
+                    ->findOrFail($id);
 
-    return view('home.room_details', compact('room'));
-}
+        //Rating Calculation
+        // dd($room);
+        //"room_ratings_count" => 2
+        // "room_ratings_sum_rating" => 10.0
+        $avgRating = '0.00';
+        $avgRatingPer = 0;
+        if($room->room_ratings_count>0){
+            $avgRating = number_format(($room->room_ratings_sum_rating/$room->room_ratings_count),2);
+            $avgRatingPer = ($avgRating*100)/5;
+        }
+        return view('home.room_details', compact('room','avgRating','avgRatingPer'));
+        }
 
 
     public function add_booking(Request $request, $id)
