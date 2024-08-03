@@ -18,25 +18,25 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarsExample04">
                            <ul class="navbar-nav mr-auto">
-                              <li class="nav-item active">
+                              <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                                  <a class="nav-link" href="{{url('/')}}">Home</a>
                               </li>
-                              <li class="nav-item">
+                              <li class="nav-item {{ request()->is('our_rooms') ? 'active' : '' }}">
                                  <a class="nav-link" href="{{url('our_rooms')}}">Our room</a>
                               </li>
-                              <li class="nav-item">
+                              <li class="nav-item {{ request()->is('hotel_gallary') ? 'active' : '' }}">
                                  <a class="nav-link" href="{{url('hotel_gallary')}}">Gallery</a>
                               </li>
 
                               @if (Route::has('login'))
                                  @auth
-                              <li class="nav-item">
+                              <li class="nav-item {{ request()->is('mybooking') ? 'active' : '' }}">
                                  <a class="nav-link" href="{{url('mybooking')}}">My Booking</a>
                               </li>
                                  @endauth
                               @endif
 
-                              <li class="nav-item">
+                              <li class="nav-item {{ request()->is('contact_us') ? 'active' : '' }}">
                                  <a class="nav-link" href="{{url('contact_us')}}">Contact Us</a>
                               </li>
 
