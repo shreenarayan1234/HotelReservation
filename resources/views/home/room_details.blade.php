@@ -93,7 +93,7 @@
                         <h6 style="padding: 2px">Room Type : {{$room->room_type}}</h6>
                         <!-- <h3 style="padding: 12px">Price : {{$room->price}}</h3> -->
                         <h6 style="padding: 2px">Price per night: <span id="pricePerNight">{{$room->price}}</span></h6>
-                        <h6 style="padding: 2px">Total Price: <span id="totalPrice">0</span></h6>
+                        <!-- <h6 style="padding: 2px">Total Price: <span id="totalPrice">0</span></h6> -->
                      </div>
                   </div>
                </div>
@@ -160,6 +160,10 @@
                 <div>
                     <label>End Date</label>
                     <input type="date" name="endDate" id="endDate">
+                </div>
+                <div>
+                    <label>Total Price</label>
+                    <input type="text" name="total_price" id="totalPriceInput" readonly>
                 </div>
                 <br>
                 <div>
@@ -322,19 +326,35 @@
                     $('#startDate').attr('min',maxDate);
                     $('#endDate').attr('min',maxDate);
 
+                // function calculateTotalPrice() {
+                //     var startDate = new Date($('#startDate').val());//Get the values of the #startDate and #endDate inputs and convert them to Date objects.
+                //     var endDate = new Date($('#endDate').val());
+                //     if(startDate && endDate && endDate > startDate) {
+                //         var timeDifference = endDate.getTime() - startDate.getTime();//Calculate the difference in time between the end date and start date in milliseconds.
+
+                //         var nights = timeDifference / (1000 * 3600 * 24);//Convert the time difference from milliseconds to days by dividing by the number of milliseconds in a day.
+
+                //         var pricePerNight = parseFloat($('#pricePerNight').text());//Get the price per night from the #pricePerNight element and convert it to a float.
+                //         var totalPrice = nights * pricePerNight;
+                //         $('#totalPrice').text(totalPrice.toFixed(2));
+                //     } else {
+                //         $('#totalPrice').text('0');
+                //     }
+                // }
                 function calculateTotalPrice() {
-                    var startDate = new Date($('#startDate').val());//Get the values of the #startDate and #endDate inputs and convert them to Date objects.
+                    var startDate = new Date($('#startDate').val());
                     var endDate = new Date($('#endDate').val());
-                    if(startDate && endDate && endDate > startDate) {
-                        var timeDifference = endDate.getTime() - startDate.getTime();//Calculate the difference in time between the end date and start date in milliseconds.
 
-                        var nights = timeDifference / (1000 * 3600 * 24);//Convert the time difference from milliseconds to days by dividing by the number of milliseconds in a day.
-
-                        var pricePerNight = parseFloat($('#pricePerNight').text());//Get the price per night from the #pricePerNight element and convert it to a float.
+                    if (startDate && endDate && endDate > startDate) {
+                        var timeDifference = endDate.getTime() - startDate.getTime();
+                        var nights = timeDifference / (1000 * 3600 * 24);
+                        
+                        var pricePerNight = parseFloat($('#pricePerNight').text());
                         var totalPrice = nights * pricePerNight;
-                        $('#totalPrice').text(totalPrice.toFixed(2));
+
+                        $('#totalPriceInput').val(totalPrice.toFixed(1));
                     } else {
-                        $('#totalPrice').text('0');
+                        $('#totalPriceInput').val('0');
                     }
                 }
 

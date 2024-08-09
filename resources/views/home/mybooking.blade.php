@@ -59,7 +59,7 @@
                 <th class="th_deg">Leaving Date</th>
                 <th class="th_deg">Status</th>
                 <th class="th_deg">Room Title</th>
-                <th class="th_deg">Price</th>
+                <th class="th_deg">Total Price</th>
                 <th class="th_deg">Image</th>
                 <th class="th_deg">Status Update</th>
 
@@ -85,7 +85,7 @@
                         @endif
                     </td>
                     <td>{{$data->room->room_title}}</td>
-                    <td>{{$data->room->price}}</td>
+                    <td>{{$data->total_price}}</td>
                     <td>
                         <img style="width:150px; height: 80px;" src="/room/{{$data->room->image}}" alt="">
                     </td>

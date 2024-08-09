@@ -34,6 +34,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/all_messages', [AdminController::class, 'all_messages']);
     Route::get('/send_mail/{id}', [AdminController::class, 'send_mail']);
     Route::post('/mail/{id}', [AdminController::class, 'mail']);
+
+
 });
 
 Route::get('/room_details/{id}', [HomeController::class, 'room_details']);

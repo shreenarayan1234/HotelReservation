@@ -66,6 +66,8 @@ class HomeController extends Controller
 
         $data->email = $request->email;
 
+        $data->total_price = $request->total_price;
+
         $data->phone = $request->phone;
 
         $startDate = $request->startDate;

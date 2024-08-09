@@ -11,7 +11,7 @@ use App\Models\Gallary;
 use App\Models\Contact;
 use App\Notifications\SendEmailNotification;
 use Notification;
-
+use DB;
 
 
 
@@ -34,13 +34,50 @@ class AdminController extends Controller
                 }
                 else if($usertype == 'admin')
                 {
-                    return view('admin.index');
+                    //For Chart
+                    $bookings = Booking::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                    ->whereYear('created_at',date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get();
+                $labels = [];
+                $data = [];
+                $colors = ['#FF6384','#36A2EB','#FFCE56','#8BC34A','#FF5722','#009688','#795548','#9C27B0','#2196F3','#FF9800','#CDDC39','#607D8B'];
+            
+                for($i = 1; $i <= 12; $i++){
+                    $month = date('F',mktime(0,0,0,$i,1));
+                    $count = 0;
+
+                    foreach($bookings as $booking){
+                        if($booking->month == $i){
+                            $count = $booking->count;
+                            break;
+                        }
+                    }
+                    array_push($labels, $month);
+                    array_push($data, $count);
+                }
+
+                $datasets = [
+                    [
+                    'label' => 'Bookings',
+                    'data' =>$data,
+                    'backgroundColor' => $colors
+                    ]
+                ];
+                    // Get the total number of users
+                    $totalUsers = User::count();
+                    $totalBookings = Booking::count();
+                    $totalRoom = Room::count();
+                    $totalIncome = Booking::sum('total_price');
+                    return view('admin.index',compact('totalUsers','totalBookings','totalRoom','totalIncome','datasets','labels'));
                 }
                 
                 else{
                     return redirect()->back();
                 }
             }
+           
         }
 
         public function home(){
@@ -229,6 +266,44 @@ class AdminController extends Controller
         Notification::send($data, new SendEmailNotification($details));
         return redirect()->back();
     }
+
+
+    //For Chart
+    public function bookingChart(){
+        $bookings = Booking::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                    ->whereYear('created_at',date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get();
+        $labels = [];
+        $data = [];
+        $colors = ['#FF6384','#36A2EB','#FFCE56','#8BC34A','#FF5722','#009688','#795548','#9C27B0','#2196F3','#FF9800','#CDDC39','#607D8B'];
+    
+        for($i = 1; $i < 12; $i++){
+            $month = date('F',mktime(0,0,0,$i,1));
+            $count = 0;
+
+            foreach($bookings as $booking){
+                if($booking->month == $i){
+                    $count = $booking->count;
+                    break;
+                }
+            }
+            array_push($labels, $month);
+            array_push($data, $count);
+        }
+
+        $datasets = [
+            [
+            'label' => 'Bookings',
+            'data' =>$data,
+            'backgroundColor' => $colors
+            ]
+        ];
+
+        return view('admin.body',compact('datasets','labels'));
+    }
+
 }
 
 

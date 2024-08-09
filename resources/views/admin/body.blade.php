@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
 <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
@@ -13,7 +22,7 @@
                     <div class="title">
                     <div class="icon"><i class="fas fa-user"></i></div><strong>User</strong>
                     </div>
-                    <div class="number dashtext-1">27</div>
+                    <div class="number dashtext-1">{{ $totalUsers }}</div>
                   </div>
     
                 </div>
@@ -24,7 +33,7 @@
                     <div class="title">
                     <div class="icon"><i class="fas fa-check-circle"></i></div><strong>Booked</strong>
                     </div>
-                    <div class="number dashtext-2">375</div>
+                    <div class="number dashtext-2">{{$totalBookings}}</div>
                   </div>
                   
                 </div>
@@ -35,7 +44,7 @@
                     <div class="title">
                       <div class="icon"><i class="fas fa-bed"></i></div><strong>Rooms</strong>
                     </div>
-                    <div class="number dashtext-3">140</div>
+                    <div class="number dashtext-3">{{$totalRoom}}</div>
                   </div>
                  
                 </div>
@@ -46,7 +55,7 @@
                     <div class="title">
                       <div class="icon"><i class="fas fa-dollar-sign"></i></div><strong>Incomes</strong>
                     </div>
-                    <div class="number dashtext-4">41</div>
+                    <div class="number dashtext-4" style="font-size: 1em;">{{$totalIncome}}</div>
                   </div>
                  
                 </div>
@@ -57,16 +66,13 @@
         <section class="no-padding-bottom">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-lg-4">
-                <div class="bar-chart block no-margin-bottom">
-                  <canvas id="barChartExample1"></canvas>
-                </div>
-                <div class="bar-chart block">
-                  <canvas id="barChartExample2"></canvas>
+              <div class="col-lg-7">
+                <div class="bar-chart block no-margin-bottom" style="height: 302px;">
+                  <canvas id="chart" style="height: 300px;margin:auto;"></canvas>
                 </div>
               </div>
-              <div class="col-lg-8">
-                <div class="line-cahrt block">
+              <div class="col-lg-5">
+                <div class="line-cahrt block" style="height: 302px;">
                   <canvas id="lineCahrt"></canvas>
                 </div>
               </div>
@@ -368,3 +374,18 @@
             </div>
           </div>
         </section>
+
+<script>
+  var ctx = document.getElementById('chart').getContext('2d');
+  var bookingChart = new Chart(ctx,{
+    type:'bar',
+    data:{
+        labels:{!! json_encode($labels) !!},
+        datasets:{!! json_encode($datasets) !!}
+    },
+  });
+
+</script>
+
+</body>
+</html>

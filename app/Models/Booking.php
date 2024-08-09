@@ -13,7 +13,8 @@ class Booking extends Model
         'email',
         'phone',
         'start_date',
-        'end_date'
+        'end_date',
+        'created_at'
     ];
 
     public function room(){
