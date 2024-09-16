@@ -145,31 +145,79 @@ class HomeController extends Controller
 
 
     //Search
+    // public function search(Request $request)
+    // {
+    //     // Get the input values from the form
+    //     $priceRange = $request->input('price_range');
+    //     $roomType = $request->input('room_type');
+
+    //     // Start building the query on the Room model
+    //     $rooms = Room::query();
+
+    //     // Apply filters based on input values
+    //     if ($priceRange) {
+    //         [$minPrice, $maxPrice] = explode('-', $priceRange);
+    //         $rooms->whereBetween('price', [(int) $minPrice, (int) $maxPrice]);
+    //     }
+
+    //     if ($roomType) {
+    //         $rooms->where('room_type', $roomType);
+    //     }
+
+    //     // Execute the query and get the filtered rooms
+    //     $rooms = $rooms->get();
+
+    //     // Return the view with the filtered rooms
+    //     return view('home.search_result', compact('rooms'));
+    // }
     public function search(Request $request)
-    {
-        // Get the input values from the form
-        $priceRange = $request->input('price_range');
-        $roomType = $request->input('room_type');
+{
+    // Get the input values from the form
+    $priceRange = $request->input('price_range');
+    $roomType = $request->input('room_type');
 
-        // Start building the query on the Room model
-        $rooms = Room::query();
+    // Fetch all rooms from the database (consider adding pagination if the dataset is large)
+    $allRooms = Room::all();
 
-        // Apply filters based on input values
-        if ($priceRange) {
+    // Initialize an empty collection for the results
+    $filteredRooms = collect();
+
+    // If price range is provided, split it into min and max price
+    $minPrice = $maxPrice = null;
+    if ($priceRange) {
+        // Handle cases where price_range is not properly formatted
+        if (strpos($priceRange, '-') !== false) {
             [$minPrice, $maxPrice] = explode('-', $priceRange);
-            $rooms->whereBetween('price', [(int) $minPrice, (int) $maxPrice]);
+            $minPrice = (int) $minPrice;
+            $maxPrice = (int) $maxPrice;
         }
-
-        if ($roomType) {
-            $rooms->where('room_type', $roomType);
-        }
-
-        // Execute the query and get the filtered rooms
-        $rooms = $rooms->get();
-
-        // Return the view with the filtered rooms
-        return view('home.search_result', compact('rooms'));
     }
+
+    // Perform linear search over all rooms
+    foreach ($allRooms as $room) {
+        $matchesPrice = true;  // Default to true unless we have price filtering
+        $matchesType = true;   // Default to true unless we have type filtering
+
+        // Check if the room matches the price range
+        if ($minPrice !== null && $maxPrice !== null) {
+            $matchesPrice = ($room->price >= $minPrice && $room->price <= $maxPrice);
+        }
+
+        // Check if the room matches the room type
+        if (!empty($roomType)) {
+            $matchesType = ($room->room_type == $roomType);
+        }
+
+        // If the room matches both criteria, add it to the filtered results
+        if ($matchesPrice && $matchesType) {
+            $filteredRooms->push($room);
+        }
+    }
+
+    // Return the view with the filtered rooms
+    return view('home.search_result', ['rooms' => $filteredRooms]);
+}
+
 
     public function saveRating($id, Request $request){
         $validator = Validator::make($request->all(), [

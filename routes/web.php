@@ -59,6 +59,7 @@ Route::post('/checkout', [StripePaymentController::class, 'checkout'])->name('ch
 Route::get('/success',[StripePaymentController::class,'success'])->name('success');
 Route::post('/cancelled',[StripePaymentController::class,'cancelled'])->name('cancelled');
 
+//WebHookController not in Used
 Route::post('/webhook',[WebHookController::class,'add_booking'])->name('webhook');
 
 Route::get('/book-room/{roomId}', [StripePaymentController::class, 'showBookingForm'])->name('book-room');
