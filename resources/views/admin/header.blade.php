@@ -19,8 +19,6 @@
             <!-- Sidebar Toggle Btn-->
             <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"><img src="images/nepalstay.png" alt="#" width="150px" height="150px" /></i></button>
           </div>
-          <div class="right-menu list-inline no-margin-bottom">    
-            <div class="list-inline-item"><a href="#" class="search-open nav-link"><i class="icon-magnifying-glass-browser"></i></a></div>
         
             <!-- Log out  -->
             <div class="list-inline-item logout">                   

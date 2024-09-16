@@ -72,7 +72,7 @@
                         <div class="title"><strong class="d-block">Booked</strong><span class="d-block">Thank's for Booking</span></div>
                         <div class="piechart chart">
                             <canvas id="pieChartHome1"></canvas>
-                            <div class="text"><strong class="d-block">{{$bookedCount}}</strong></div>
+                            <div class="text"><strong class="d-block">{{$approvedCount}}</strong></div>
                         </div>
                     </div>
                 </div>
@@ -84,28 +84,28 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="stats-with-chart-2 block">
-                        <div class="title"><strong class="d-block">Pending</strong><span class="d-block">Thank your for booking my hotel</span></div>
+                        <div class="title"><strong class="d-block">Pending</strong><span class="d-block">Ready to Pay</span></div>
                         <div class="piechart chart">
                             <canvas id="pieChartHome2"></canvas>
-                            <div class="text"><strong class="d-block">{{$pendingCount}}</strong></div>
+                            <div class="text"><strong class="d-block">{{$waitingCount}}</strong></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="stats-with-chart-2 block">
-                        <div class="title"><strong class="d-block">Blocked</strong><span class="d-block">Don't do that</span></div>
+                        <div class="title"><strong class="d-block">Canceled</strong><span class="d-block">Don't do that</span></div>
                         <div class="piechart chart">
                             <canvas id="pieChartHome3"></canvas>
-                            <div class="text"><strong class="d-block">{{$blockedCount}}</strong></div>
+                            <div class="text"><strong class="d-block">{{$canceledCount}}</strong></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="stats-with-chart-2 block">
-                        <div class="title"><strong class="d-block">Booking Canceled</strong><span class="d-block">Don't do that</span></div>
+                        <div class="title"><strong class="d-block">Booking Rejected</strong><span class="d-block">Sorry Room not Available</span></div>
                         <div class="piechart chart">
                             <canvas id="pieChartHome4"></canvas> <!-- Changed ID here -->
-                            <div class="text"><strong class="d-block">{{$canceledCount}}</strong></div>
+                            <div class="text"><strong class="d-block">{{$rejectedCount}}</strong></div>
                         </div>
                     </div>
                 </div>
@@ -129,9 +129,9 @@
         var pieChart1 = new Chart(pieCtx1, {
             type: 'pie',
             data: {
-                labels: ['Booked'],
+                labels: ['Approved'],
                 datasets: [{
-                    data: [{{$bookedCount}}],
+                    data: [{{$approvedCount}}],
                     backgroundColor: ['#36A2EB'],
                 }]
             }
@@ -141,9 +141,9 @@
         var pieChart2 = new Chart(pieCtx2, {
             type: 'pie',
             data: {
-                labels: ['Pending'],
+                labels: ['Waiting'],
                 datasets: [{
-                    data: [{{$pendingCount}}],
+                    data: [{{$waitingCount}}],
                     backgroundColor: ['#FF6384'],
                 }]
             }
@@ -153,9 +153,9 @@
         var pieChart3 = new Chart(pieCtx3, {
             type: 'pie',
             data: {
-                labels: ['Blocked'],
+                labels: ['Canceled'],
                 datasets: [{
-                    data: [{{$blockedCount}}],
+                    data: [{{$canceledCount}}],
                     backgroundColor: ['#FFCE56'],
                 }]
             }
@@ -165,9 +165,9 @@
         var pieChart4 = new Chart(pieCtx4, {
             type: 'pie',
             data: {
-                labels: ['Canceled'],
+                labels: ['Rejected'],
                 datasets: [{
-                    data: [{{$canceledCount}}],
+                    data: [{{$rejectedCount}}],
                     backgroundColor: ['#8BC34A'],
                 }]
             }

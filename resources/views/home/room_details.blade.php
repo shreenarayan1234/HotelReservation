@@ -127,58 +127,63 @@
 
                 @endif
 
-            <form action="{{ url('add_booking', $room->id) }}" method="post">
-                @csrf
-                <div>
-                    <label>Name</label>
-                    <input type="text" name="name" 
-                    @if(Auth::id())
-                    value="{{ Auth::user()->name }}"
-                    @endif
-                    >
-                </div>
-                <div>
-                    <label>Email</label>
-                    <input type="email" name="email"
-                    @if(Auth::id())
-                    value="{{ Auth::user()->email }}"
-                    @endif
-                    >
-                </div>
-                <div>
-                    <label>Phone</label>
-                    <input type="number" name="phone"
-                    @if(Auth::id())
-                    value="{{ Auth::user()->phone }}"
-                    @endif
-                    >
-                </div>
-                <div>
-                    <label>Start Date</label>
-                    <input type="date" name="startDate" id="startDate">
-                </div>
-                <div>
-                    <label>End Date</label>
-                    <input type="date" name="endDate" id="endDate">
-                </div>
-                <div>
-                    <label>Total Price</label>
-                    <input type="text" name="total_price" id="totalPriceInput" readonly>
-                </div>
-                <br>
-                <div>
-                    @if(Auth::id())
-                    <input type="submit" style="background-color: skyblue;" class="btn btn-primary" value="Book Room">
-                    @else
-                    <input type="button" style="background-color: skyblue; cursor: not-allowed;" class="btn btn-primary" value="Book Room" id="bookRoomButton">
-                    <script>
-                        document.getElementById('bookRoomButton').addEventListener('click', function() {
-                            confirm('Please log in to book a room.');
-                        });
-                    </script>
-                    @endif
-                </div>
-            </form>
+           
+            <form action="{{ route('checkout') }}" method="post">
+    @csrf
+    <div>
+        <label>Name</label>
+        <input type="text" name="name" 
+        @if(Auth::id())
+        value="{{ Auth::user()->name }}"
+        @endif
+        >
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" name="email"
+        @if(Auth::id())
+        value="{{ Auth::user()->email }}"
+        @endif
+        >
+    </div>
+    <div>
+        <label>Phone</label>
+        <input type="number" name="phone"
+        @if(Auth::id())
+        value="{{ Auth::user()->phone }}"
+        @endif
+        >
+    </div>
+    <div>
+        <label>Start Date</label>
+        <input type="date" name="startDate" id="startDate">
+    </div>
+    <div>
+        <label>End Date</label>
+        <input type="date" name="endDate" id="endDate">
+    </div>
+    <div>
+        <label>Total Price</label>
+        <input type="text" name="total_price" id="totalPriceInput" readonly>
+    </div>
+
+    <!-- Hidden input to store room ID -->
+    <input type="hidden" name="room_id" value="{{ $room->id }}">
+
+    <br>
+    <div>
+        @if(Auth::id())
+        <input type="submit" style="background-color: skyblue;" class="btn btn-primary" value="Book Room">
+        @else
+        <input type="button" style="background-color: skyblue; cursor: not-allowed;" class="btn btn-primary" value="Book Room" id="bookRoomButton">
+        <script>
+            document.getElementById('bookRoomButton').addEventListener('click', function() {
+                confirm('Please log in to book a room.');
+            });
+        </script>
+        @endif
+    </div>
+</form>
 
             </div>
             
@@ -326,21 +331,7 @@
                     $('#startDate').attr('min',maxDate);
                     $('#endDate').attr('min',maxDate);
 
-                // function calculateTotalPrice() {
-                //     var startDate = new Date($('#startDate').val());//Get the values of the #startDate and #endDate inputs and convert them to Date objects.
-                //     var endDate = new Date($('#endDate').val());
-                //     if(startDate && endDate && endDate > startDate) {
-                //         var timeDifference = endDate.getTime() - startDate.getTime();//Calculate the difference in time between the end date and start date in milliseconds.
-
-                //         var nights = timeDifference / (1000 * 3600 * 24);//Convert the time difference from milliseconds to days by dividing by the number of milliseconds in a day.
-
-                //         var pricePerNight = parseFloat($('#pricePerNight').text());//Get the price per night from the #pricePerNight element and convert it to a float.
-                //         var totalPrice = nights * pricePerNight;
-                //         $('#totalPrice').text(totalPrice.toFixed(2));
-                //     } else {
-                //         $('#totalPrice').text('0');
-                //     }
-                // }
+                
                 function calculateTotalPrice() {
                     var startDate = new Date($('#startDate').val());
                     var endDate = new Date($('#endDate').val());

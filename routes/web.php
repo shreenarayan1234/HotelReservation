@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\WebHookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +51,15 @@ Route::get('/mybooking', [HomeController::class, 'mybooking']);
 
 Route::get('/search-rooms', [HomeController::class, 'search'])->name('search.rooms');
 Route::post('/save-rating/{roomId}',[HomeController::class,'saveRating'])->name('front.saveRating');
+
+
+//Stripe Route
+// Route::post('/checkout',[StripePaymentController::class,'checkout']);
+Route::post('/checkout', [StripePaymentController::class, 'checkout'])->name('checkout');
+Route::get('/success',[StripePaymentController::class,'success'])->name('success');
+Route::post('/cancelled',[StripePaymentController::class,'cancelled'])->name('cancelled');
+
+Route::post('/webhook',[WebHookController::class,'add_booking'])->name('webhook');
+
+Route::get('/book-room/{roomId}', [StripePaymentController::class, 'showBookingForm'])->name('book-room');
+

@@ -65,11 +65,10 @@ class AdminController extends Controller
                 ];
                 
                  // Count the number of bookings for each status
-                $pendingCount = Booking::where('status', 'pending')->count();
-                $blockedCount = Booking::where('status', 'blocked')->count();
+                $rejectedCount = Booking::where('status', 'rejected')->count();
                 $canceledCount = Booking::where('status', 'canceled')->count();
                 $approvedCount = Booking::where('status', 'approved')->count();
-                $bookedCount = Booking::where('status', 'booked')->count();
+                $waitingCount = Booking::where('status', 'waiting')->count();
 
 
                 // Get the total number of users
@@ -77,7 +76,7 @@ class AdminController extends Controller
                 $totalBookings = Booking::count();
                 $totalRoom = Room::count();
                 $totalIncome = Booking::sum('total_price');
-                return view('admin.index', compact('totalUsers', 'totalBookings', 'totalRoom', 'totalIncome', 'datasets', 'labels','pendingCount', 'blockedCount', 'canceledCount', 'approvedCount','bookedCount'));
+                return view('admin.index', compact('totalUsers', 'totalBookings', 'totalRoom', 'totalIncome', 'datasets', 'labels','rejectedCount', 'canceledCount', 'approvedCount','waitingCount'));
             } else {
                 return redirect()->back();
             }

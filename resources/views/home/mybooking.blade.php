@@ -71,13 +71,13 @@
                     <td>{{$data->start_date}}</td>
                     <td>{{$data->end_date}}</td>
                     <td>
-                        @if ($data->status == 'approve')
+                        @if ($data->status == 'approved')
                             <span style="color:skyblue;">Approved</span>
                         @endif
                         @if ($data->status == 'rejected')
                             <span style="color:red;">Rejected</span>
                         @endif
-                        @if ($data->status == 'Canceled')
+                        @if ($data->status == 'canceled')
                             <span style="color:red;">Cancelled</span>
                         @endif
                         @if ($data->status == 'waiting')
