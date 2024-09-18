@@ -21,6 +21,9 @@
                 <li class="{{ request()->is('bookings') ? 'active' : '' }}">
                   <a href="{{url('bookings')}}"> <i class="fas fa-check-circle"></i>Booking </a>
                 </li>
+                <li class="{{ request()->is('manage_user') ? 'active' : '' }}">
+                  <a href="{{url('manage_user')}}"> <i class="fas fa-user"></i>Manage User </a>
+                </li>
                 <li class="{{ request()->is('view_gallary') ? 'active' : '' }}">
                   <a href="{{url('view_gallary')}}"> <i class="fas fa-images"></i>Gallery </a>
                 </li>

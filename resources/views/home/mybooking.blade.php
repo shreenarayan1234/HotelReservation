@@ -71,8 +71,8 @@
                     <td>{{$data->start_date}}</td>
                     <td>{{$data->end_date}}</td>
                     <td>
-                        @if ($data->status == 'approved')
-                            <span style="color:skyblue;">Approved</span>
+                        @if ($data->status == 'paid')
+                            <span style="color:green;">Approved</span>
                         @endif
                         @if ($data->status == 'rejected')
                             <span style="color:red;">Rejected</span>

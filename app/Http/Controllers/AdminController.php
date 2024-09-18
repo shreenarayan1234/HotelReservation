@@ -67,7 +67,7 @@ class AdminController extends Controller
                  // Count the number of bookings for each status
                 $rejectedCount = Booking::where('status', 'rejected')->count();
                 $canceledCount = Booking::where('status', 'canceled')->count();
-                $approvedCount = Booking::where('status', 'approved')->count();
+                $approvedCount = Booking::where('status', 'paid')->count();
                 $waitingCount = Booking::where('status', 'waiting')->count();
 
 
@@ -225,6 +225,55 @@ class AdminController extends Controller
         return redirect()->back();
 
     }
+ //Displaying the room
+ public function manage_user()
+ {
+     $datas = User::all();   //here 'User' is modal name and all data from table is store in $data variable
+
+     return view('admin.manage_user', compact('datas'));  //all the data from $data is send to blade file
+ }
+// Manage User
+ //Deleting the room
+ public function delete_user($id)
+{
+    $user = User::find($id);
+    if ($user) {
+        $user->delete();
+        return redirect()->back()->with('message', 'User deleted successfully');
+    } else {
+        return redirect()->back()->with('error', 'User not found');
+    }
+}
+
+
+
+ 
+ public function edit_user(Request $request, $id)
+{
+    // Find the user by ID
+    $user = User::find($id);
+
+    // Update user details
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
+    $user->usertype = $request->usertype;
+
+    // Update password if provided
+    if ($request->filled('password')) {
+        // Validate and hash the new password
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+        ]);
+        $user->password = bcrypt($request->password);
+    }
+
+    // Save the updated user details
+    $user->save();
+
+    // Redirect back to the previous page
+    return redirect()->back()->with('success', 'User updated successfully!');
+}
 
 
     public function view_gallary()
