@@ -12,12 +12,11 @@
         <!-- Sidebar Navidation Menus-->
         <ul class="list-unstyled">
                 <li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{url('home')}}"> <i class="fas fa-home"></i>Home </a></li>
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Hotel Rooms </a>
-                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                    <li><a href="{{url('create_room')}}">Add Rooms</a></li>
-                    <li><a href="{{url('view_room')}}">View Rooms</a></li>
-                  </ul>
-                </li>
+                
+                <li><a href="{{url('create_room')}}"><i class="fas fa-plus-circle"></i> Add Rooms</a></li>
+                <li><a href="{{url('view_room')}}"><i class="fas fa-eye"></i> View Rooms</a></li>                  
+                
+              </li>
                 <li class="{{ request()->is('bookings') ? 'active' : '' }}">
                   <a href="{{url('bookings')}}"> <i class="fas fa-check-circle"></i>Booking </a>
                 </li>
